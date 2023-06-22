@@ -1,0 +1,22 @@
+<?php
+/*
+Plugin Name: NS Reading Progress Bar
+Description: Adds a progress bar to show the reader how far they have progressed in reading a post
+Version: 1.0
+Author: your name
+Author URI: https://yoursite.com
+*/
+
+// Function that adds the progress bar to the post
+function reading_progress_bar() {
+    if ( 'post' === get_post_type() ) {
+        ob_start();
+        include plugin_dir_path( __FILE__ ) . 'html/template.php';
+        $html = ob_get_clean();
+        echo $html;
+
+        wp_enqueue_style( 'reading-progress-bar', plugin_dir_url( __FILE__ ) . 'css/style.css' );
+        wp_enqueue_script( 'reading-progress-bar', plugin_dir_url( __FILE__ ) . 'js/script.js', array('jquery'), '1.0', true );
+    }
+}
+add_action( 'wp_footer', 'reading_progress_bar' );
